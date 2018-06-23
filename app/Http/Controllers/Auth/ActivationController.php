@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ActivationController extends Controller
 {
-    public function activate()
+    public function activate(Request $request)
     {
+        $user = User::byActivationColumns($request->only('email', 'token'))->firstOrFail();
 
+        $user->active = true;
+        $user->activation_token = null;
+        $user->save();
+
+        auth()->loginUsingId($user->id);
+
+        return redirect()->route('home')
+            ->withSuccess('Activated, Now you are signed in');
     }
 }

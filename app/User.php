@@ -26,4 +26,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'activation_token'
     ];
+
+    public function scopeByActivationColumns($query, $columns)
+    {
+        return $query->where('email', $columns['email'])
+            ->where('activation_token', $columns['token']);
+    }
 }

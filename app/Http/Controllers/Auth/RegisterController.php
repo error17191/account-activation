@@ -87,8 +87,6 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-//        $this->guard()->login($user);
-
         return $this->registered($request, $user)
             ?: redirect(route('login'))->withSuccess(
                 'Account created, Please check your mailbox and follow the verification email'
