@@ -3,8 +3,8 @@
 namespace App\Listeners\Auth;
 
 use App\Events\Auth\UserRequestsActivationEmail;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Mail\Auth\ActivationEmail;
+use Illuminate\Support\Facades\Mail;
 
 class SendActivationEmail
 {
@@ -21,11 +21,15 @@ class SendActivationEmail
     /**
      * Handle the event.
      *
-     * @param  UserRequestsActivationEmail  $event
+     * @param  UserRequestsActivationEmail $event
      * @return void
      */
     public function handle(UserRequestsActivationEmail $event)
     {
-        dd($event);
+        if ($event->user->active) {
+            return;
+        }
+
+        Mail::to($event->user->email)->send(new ActivationEmail($event->user));
     }
 }
