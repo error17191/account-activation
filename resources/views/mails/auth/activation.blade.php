@@ -3,7 +3,7 @@
 
 Thanks for registering, Please click the link below to activate your account
 
-@component('mail::button', ['url' => route('activate_email',[
+@component('mail::button', ['url' => route('activate_account',[
     'token' => $user->activation_token,
     'email' => $user->email
 ])])

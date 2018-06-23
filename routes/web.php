@@ -19,4 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('activate','Auth\ActivationController@activate')->name('activate_email');
+Route::get('activate','Auth\ActivationController@activate')->name('activate_account');
+Route::get('activate/resend','Auth\ActivationResendController@showResendForm')->name('show_resend_activation_form');
+Route::post('activate/resend','Auth\ActivationResendController@resend')->name('resend_activation_email');
+
